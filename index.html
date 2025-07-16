@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wi-Fi Security Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Wi-Fi Security Analyzer 🔍</h1>
+        <form method="POST">
+            <button type="submit" class="scan-btn">🔄 Scan Wi-Fi Networks</button>
+        </form>
+
+        {% if networks %}
+        <a href="/download" class="download-btn">⬇️ Download Report (.csv)</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>SSID</th>
+                    <th>Signal</th>
+                    <th>Bars</th>
+                    <th>Security</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for net in networks %}
+                <tr class="{{ 'insecure' if net.insecure else '' }}">
+                    <td>{{ net.ssid }}</td>
+                    <td>{{ net.signal }}</td>
+                    <td>{{ net.bars }}</td>
+                    <td>{{ net.security }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
